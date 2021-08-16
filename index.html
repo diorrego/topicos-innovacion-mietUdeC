@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aplicaciones del SLAM</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: #FFFFFF;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      margin: 1rem auto 0 auto;
+      width: 50rem;
+      padding: 1rem;      
+    }
+    @media only screen and (max-width: 1000px) {
+      body {
+        width: 95%;
+      }
+      button {
+        width: 95%
+      }
+    }
+    h1, h3 {
+      text-align: center;
+    }
+    h1{
+      font-weight: bold;
+    }
+    .box {
+      background-color: #1F1F1F;
+      padding: 1rem;
+      margin: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 1px 1px 0 rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.12), 0 1px 3px 0 rgba(0,0,0,0.20);
+    }
+    p, a {
+      font-size: larger;
+      color: #FFFFFF;
+      margin: 1rem 1rem 1rem 1rem;
+    }
+    li {
+      font-size: larger;
+      color: #FFFFFF;
+      margin: 1rem 1rem 1rem 2rem;
+    }
+    #deploy0, #deploy1, #deploy2, #deploy3, #deploy4 {
+      display: none;
+    }
+    button {
+      width: 25rem;
+      height: 3rem;
+      color: #FFFFFF; 
+      background-color: #616161;
+      display: block;
+      border-style: none;
+      border-radius: 10px;
+      margin: 1.5rem auto 1.5rem auto;
+      box-shadow: 0 12px 17px 2px rgba(0,0,0,0.14), 0 5px 22px 4px rgba(0,0,0,0.12), 0 7px 8px -4px rgba(0,0,0,0.20);
+      font-size: large;
+      cursor: pointer;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }     
+  </style>
+</head>
+<body>
+  <a>Paula Riquelme y Diego Orrego - Tópicos de Innovación, miet-UdeC 2021</a>
+  <div class="box"> 
+    <h1>Aplicaciones del vSLAM</h1>
+    <h3>Inteligencia Artificial</h3>
+    <p>La localización y mapeo simultáneos (SLAM) es una técnica para estimar el movimiento del sensor y reconstruir la estructura de un entorno desconocido. En este trabajo abordaremos principalmente el SLAM visual (vSLAM) en tiempo real y los beneficios en apliciones como Face ID mediante el sistema de cámara TrueDepth de la compañía Apple en un caso real de negocios de una empresa de Concepción, Chile.</p>
+  </div>
+  <button id="colorBoton0" onclick="deploy(0)">Introducción</button>
+  <div class="box" id="deploy0">    
+    <p>La técnica de localización y mapeo simultáneos (SLAM) posee un gran número de aplicaciones como la visión por computadora, la visualización basada en realidad aumentada (RA) y los automóviles autónomos. En este trabajo nos centraremos en las técnicas o algoritmos de vSLAM en tiempo real, debido a que tienen una cercanía en el día a día con el usuario promedio. Los algoritmos vSLAM son ocupados para construir sistemas de realidad aumentada, que se encuentran en nuestros filtros de Instagram o incluso en aplicaciones de comunicación clínica paciente-médico-laboratorio en el área de la salud, por ende traen beneficios desde el ocio y la diversión hasta el bienestar.</p>
+    <p>El vSLAM tiene grandes desafíos debido a sus multiples aplicaciones. Un desafío interesante es la construcción de diversos mapas, desde navegación hasta mapas topológicos, estos mapas permitirán la planificación del movimiento en grandes territorios. Además, el vSLAM ha incursionado en cirugías médicas minimamente invasivas. Una aplicación atractiva del vSLAM es sin duda la Realidad Aumentada (RA), la RA es una especificidad de la Realidad Virtual (RV), en consecuencia la Realidad Aumentada mezcla elementos virtuales con elementos reales para concibir una nueva realidad para el usuario. Varios sistemas de realidad aumentada han sido creados mediantes técnicas SLAM, debido a su efectividad en la tarea, por ejemplo, el marco de trabajo AR Foundation de Unity fue desarrollado principalmente con técnicas basadas en SLAM y con especificidad para distintos sensores, en el caso de los equipos con SO ANDROID está el subsistema ARCore y en el caso de los equipos con SO iOS está el subsistema ARKit por ejemplo.</p>
+    <p>Este trabajo se organiza de la siguiente forma, primera se entrega un marco de definición para el SLAM y vSLAM y se discutirá un caso real de negocios de una empresa de Concepción que utiliza tecnologías basadas en vSLAM para la mejora de comunicación paciente-odontólogo-laboratorio en el área odontológica, lo anterior se encuentra en la sección Inteligencia Artificial en vSLAM, luego en la sección Análisis Grupal se reflexiona sobre el vSLAM poniendo enfásis en los desafíos futuros que deja el caso de negocios presentado, y por último se presentan las conclusiones.</p>
+  </div>
+  <button id="colorBoton1" onclick="deploy(1)">Inteligencia Artificial en vSLAM</button>
+  <div class="box" id="deploy1">
+    <h2>vSLAM</h2>
+    <p>La Localización y Mapeo Simultáneos (SLAM) Visuales o vSLAM es una técnica que sirve para obtener la estructura 3D de un
+    entorno desconocido y el movimiento del sensor con el contorno, sólo con información visual. El vSLAM es una técnica
+    capaz de estimar la pose en un entorno desconocido basándose en los datos recopilados por las cámaras y,
+    simultáneamente, construir un mapa ambiental. Los algoritmos vSLAM se han propuesto ampliamente en el campo de la visión
+    por computadora, la robótica y la Realidad Aumentada (RA). En especial, los algoritmos vSLAM son buenos para la
+    estimación de la postura de la cámara en los sistemas RA porque la configuración de los sistemas puede ser simple. Uno
+    de los requisitos importantes en los sistemas de RA es la respuesta en tiempo real al combinar objetos reales y
+    virtuales de forma fluida e interactiva.</p>
+    <p>El marco de los algoritmos vSLAM se compone de tres módulos básicos: a) iniciación, donde define un sistema de
+    coordenadas para la estimación de la postura de la cámara y la reconstrucción en 3D en un entorno desconocido, luego se
+    realiza el b) seguimiento y el c) mapeo para estimar continuamente las poses de la cámara. En el mapeo, el mapa
+    reconstruido se rastrea con la imagen para estimar la pose de la cámara de la imagen con respecto al mapa.</p>
+    <p>Las características del vSLAM dependen de las metodologías utilizadas en los módulos, por los que los algoritmos
+    dependen en gran medida de las metodologías aplicadas. En vSLAM existen dos tipos de métodos:</p>
+    <li>Métodos basados en características: este método utiliza imágenes como entrada al algoritmo y son utilizados
+    principalmente para generar mapas dispersos. Algunos ejemplos de este tipo de métodos es el MonoSLAM, donde el
+    seguimiento y el mapeo se realizan de manera simultánea, el PTMA donde se separa el seguimiento del mapeo en diferentes
+    subprocesos en la CPU. En entornos grandes.</li>
+    <li>Métodos directos: a diferencia del método anterior este no extrae las características de la imagen. Se calcula el
+    movimiento de la cámara basándose en las imágenes continuas. Este método no se basa en la extracción y coincidencia de
+    puntos característicos, por lo que no es sensible al ambiente ni a la calidad de la imagen. Este método genera mapas
+    dispersos, semi-densos y densos de acuerdo a los puntos que se utilizan en el algoritmo. Los métodos densos como el DTAM
+    generan un mapa denso en base a los valores de profundidad que se estiman para cada píxel en cada fotograma clave. Estos
+    métodos pueden resultar útiles para el modelado 3D en tiempo real con GPU. A diferencia de los métodos densos, los
+    métodos semidensos como LSD-SLAM y dispersos como SVO o DSO se centran en las aplicaciones basadas en el seguimiento de
+    las poses del sensor. Estos métodos pueden ejecutarse en tiempo real en CPU.</li>
+    <h2>Caso de Negocios</h2>
+    <p>El año 2018 en cooperación con el Departamento de Ingeniería Industrial de la Universidad de Concepción se realizó un
+    estudio de mercado para la sucursal de Concepción de la Clínica Dental Cumbre. De este estudio se identificó que el
+    37,6% de nuestros clientes asisten por motivos estéticos, mientras 22,4% asiste por un problema particular. Además se
+    vislumbra una fuerte formación profesional de una corriente alternativa a la odontología sobre el diseño digital, en
+    latinoamérica la mayor cantidad de ofertas de formación se concentran en el país de Brasil. El creciente interés de los
+    profesionales de la odontología por la formación en diseño digital responde a la creciente demanda de los clientes por
+    la estética. Por otro lado, diferentes industrias han optado por la personalización de sus productos y/o servicios, por
+    ejemplo Starbuck con una estrategia de personalización simple, llama por el nombre del cliente al momento de entregar un
+    producto, otras marcas como Facebook y Google a través del análisis de datos, entrega publicidad de acuerdo a las
+    preferencias y gustos. En niveles más avanzados, se pueden observar empresas que buscan co-crear el producto con el
+    cliente, personalizando el entregable de acuerdo a las decisiones del cliente. En consecuencia con la tendencia de la
+    personalización de productos y/o servicios en distintos sectores económicos, es que los clientes están prefiriendo
+    productos que se adapten a ellos, es decir que ellos puedan escoger y decidir sobre el valor percibido del producto y/o
+    servicio. En base a la creciente demanda por la estética en el mercado odontológico y la personalización de
+    servicio/producto en diferentes industrias, es que se ha vislumbrado el desafío de ofrecer un servicio orientado a la
+    estética y la personalización del entregable para los actuales y futuros clientes de Clínica Dental Cumbre en procesos
+    odontológicos de diseño de sonrisas. En la investigación realizada por Doya Omar y Carolina Duarte en el 2017 titulada
+    "The application of parameters forcomprehensive smile esthetics by digital smile design programs: A review of
+    literature" se especifica que en la práctica moderna de la odontología, más pacientes exigen resultados de tratamiento
+    altamente estéticos, además proponen que el diseño de sonrisa digital es una solución para satisfacer esta creciente
+    demanda. En el 2019 Gabriele Cervino y compañía realizaron la investigación titulada "Dental Restorative Digital
+    Workflow: Digital Smile Design from Aestheticto Function" que especifica que el diseño de sonrisa digital requiere de
+    diversas especialidades odontológicas, las que pueden incluir: Rehabilitación Oral, Cirugía Periodiontal, Implatología,
+    Ortodoncia y Cirugías Maxilofaciales. Un estudio publicado el 2004 por Claudio Flore-Mir y compañía titulado "Lay
+    person's perception of smile aesthetics in dental and facial views" relata que al ver a una persona por primera vez, un
+    31% observa la boca, mientras que un 41% los ojos, clarificando que el rostro es determinante en el atractivo. Shyrley
+    Díaz-Cárdenas y compañía el año 2018 publicó el estudio titulado "Impacto de la sonrisa sobre calidad de vida
+    relacionada con salud bucal en adultos", en donde se estudió a 389 adultos concluyendo que la insatisfacción de la
+    sonrisa genera impacto negativo sobre la calidad de vida relacionada con la salud bucal. En la rehabilitación protésica
+    dental, el tratamiento y la comunicación se logran utilizando metodologías rigurosas como los protocolos de diseño de
+    sonrisas. Pero éstos son limitados debido a que la mayoría son hechos a mano o en 2D no permitiendo un flujo digital
+    para cumplir la expectativa generada en el diseño, sin embargo, con las limitaciones mencionadas ayudan a mejorar la
+    planificación en el tratamiento y la comunicación con el paciente en comparación con tratamientos sin etapas de diseño
+    digital.</p>
+    <p>Debido a esta oportunidad la Clínica Dental Cumbre en Concepción está desarrollando de forma experimental una aplicación de realidad aumentada (RA) bajo una estrategia de espejo mejorado para la
+    coordinación temporal y espacial virtual de estructura dental diseñada en software especializado en formato .STL que
+    incluye colores y rugosidad de superficie, con espacio bucal de paciente único, considerando aperturas variables de
+    boca, efectos de estructura diseñada en musculatura circundante de la boca, y seguimiento en tiempo real del movimiento
+    de cuerpo libre de toda la cabeza. Lo anterior permitirá al paciente ver su rostro modificado por la realidad virtual
+    generando una INMERSIÓN con la tecnología RA, como también podrá mover su cabeza y rostro continuando con una percepción
+    positiva de la realidad virtual logrando una INTERACCIÓN en tiempo real con la tecnología RA, todo esto basado en una
+    experiencia de interacción entre elementos reales y virtuales. En resumen el paciente podrá ver el diseño de su sonrisa en una pantalla de celular o tablet mediante la captura de información de la cámara y el diseño clínico de la sonrisa en medios digitales.</p>
+    <p>Esta aplicación se desarrolla bajo el subsitema de desarrollo de RA de Unity ARKit para sistemas operativos iOS que utiliza algoritmos SLAM. Lo anterior se debe a la superioridad de los sensores
+    para entregar información al sistema de RA en los equipos con el sistema de cámara TrueDepth. La cámara TrueDepth captura datos faciales precisos proyectando y analizando más de 30 000 puntos invisibles para crear
+    un mapa de profundidad de la cara; además, captura una imagen infrarroja de esta. Una sección del motor neuronal del
+    chip A11, A12 Bionic, A12X Bionic y A13 Bionic (protegido dentro Secure Enclave) transforma el mapa de profundidad y la
+    imagen infrarroja en una representación matemática que luego compara con los datos faciales registrados. La tecnología ARKit es un sistema Visual Interial Odometry, con una simple detección de planos 2D, este sistema rastrea la posición en el espacio en tiempo real de un objeto. El objeto se rastrea a través del sistema visual (cámara), haciendo coincidir un punto en el mundo real con un píxel en el sensor cámara. El objeto también se rastrea por el sistema inercial (acelerómetro y giroscopio), generando una medición inercial. La salida de ambos sistemas se combina a través de un filtro de Kalman que determina cuál de los dos sistemas proporciona la mejor estimación de la posición "real" del objeto. El iPhone gracias a ARKit rastrea la distancia que recorrido en el espacio 6D, significando 6D = 3D de traslación xyz(traslación) + 3D de rotación.</p>
+    <p>La tecnología que desarrolla Clínica Dental Cumbre se denomina espejo del futuro, ya que hace una metáfora a la sonrisa que podrías poseer en el futuro. Esta tecnología se encuentra en proceso de desarrollo con pruebas satisfactorias en un paciente, cuando la tecnología alcance un nivel estable como sistema informático se realizarán pruebas en diversos pacientes para pulir posicionamiento principalmente.</p>
+  </div>
+  <button id="colorBoton2" onclick="deploy(2)">Análisis grupal</button>
+  <div class="box" id="deploy2">
+    <p>Los sistemas inteligentes que logran generar conocimiento a través de imagenes o data visual tienen grandes aplicaciones. En especial los sistemas basados en métodos como el SLAM, ya que varias compañías importantes han invertido en el desarrollo de tecnologías creyendo en este método para la obtención de resultados efectivos. El hecho que ARfondution sea una herramienta tan popular en el desarrollo de AR en ANDROID como iOS conlleva una gran responsabilidad en avanzar y pulir los métodos SLAM, ya que según los datos ofrecidos por Yi Min Shum en el 2020 había 5,190 mil millones de usuarios móviles, siendo un 74% del sistema Android y un 25% del sistema iOS. </p>
+    <p>Lo anterior explica la oportunidad que está desarrollando Clínica Dental Cumbre. Qué según el Director del Proyecto, Diego Orrego, ha logrado responder a necesidades del paciente (con sus propias palabras) como sentir vergüenza al momento de ver sus radiografías porque se le ve lo que le falta o bajar la ansiedad para enteder e imaginarse como le quedará el tratamiento odontológico. La AR que se desarrolla bajos los métodos de vSLAM ha logrado construir visiones que mejorarán los servicios de salud.</p>
+  </div>
+  <button id="colorBoton3" onclick="deploy(3)">Conclusiones</button>
+  <div class="box" id="deploy3">
+    <p>En este trabajo se revisó la conceptualización de los métodos SLAM, en específico de los métodos vSLAM. Se puede comprender que los SLAM se componen de procesos sumamente complejos, ya que la obtención de datos a través de imagenes tienen ciertas desventajas en rendimiento con respecto a otros sensores, sin embargo, tecnologías como el sistema TrueDepth logran aportar más datos para asegurar el resultado esperado o apropiado al contexto real gracias a la implementación de sensores que generan datos distintos a los datos visuales como imagenes o vídeos.</p>
+    <p>Además, se presentó un caso de negocios que aplicó esta tecnología en la comunicación clínica paciente-médico-laboratorio para diseñar digitalmente una sonrisa, mostrarla al paciente mediante tecnología de realidad aumentada construida en base a métodos vSLAM su sonrisa en su smartphone, para posteriormente diseñar los materiales en laboratorio. Esto explica los beneficios y aporte del SLAM a la inteligencia artificial y al campo de la robótica.</p>
+  </div>
+  <button id="colorBoton4" onclick="deploy(4)">Referencias</button>
+  <div class="box" id="deploy4">
+    <li>
+      <a href="https://developer.apple.com/videos/play/wwdc2018/610/">https://developer.apple.com/videos/play/wwdc2018/610/</a>
+    </li>
+    <li>
+      <a href="https://ipsjcva.springeropen.com/articles/10.1186/s41074-017-0027-2">Taketomi, T., Uchiyama, H., & Ikeda, S. (2017). Visual SLAM algorithms: a survey from 2010 to 2016. IPSJ Transactions on Computer Vision and Applications, 9(1), 1-11.</a>
+    </li>
+    <li>
+      <a href="https://dl.acm.org/doi/abs/10.1145/3297156.3297163">Yang, Z., & Shi, D. (2018, December). Mapping Technology in Visual SLAM: A Review. In Proceedings of the 2018 2nd International Conference on Computer Science and Artificial Intelligence (pp. 291-295).</a>
+    </li>
+  </div>
+  <script>
+    var stateClick = [true,true,true,true,true];
+    function deploy(i){   
+      if (stateClick[i]==true){
+        document.getElementById('deploy' + i).style.display = "block";
+        document.getElementById('colorBoton' + i).style.backgroundColor = "#BB86FC";
+        document.getElementById('colorBoton' + i).style.color = "#000000";
+        stateClick[i] = false;
+      }
+      else if(stateClick[i]==false){
+        document.getElementById('deploy' + i).style.display = "none";
+        document.getElementById('colorBoton' + i).style.backgroundColor = "#616161";
+        document.getElementById('colorBoton' + i).style.color = "#FFFFFF";
+        stateClick[i] = true;
+      }      
+    }
+  </script>
+</body>
+</html>
